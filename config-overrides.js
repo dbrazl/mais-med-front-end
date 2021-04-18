@@ -6,5 +6,6 @@ module.exports = override(
     {
       rootPathSuffix: 'src',
     },
-  ])
+  ]),
+  addBabelPlugin(['@babel/plugin-proposal-optional-chaining'])
 );
