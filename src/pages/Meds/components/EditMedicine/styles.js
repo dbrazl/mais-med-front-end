@@ -40,9 +40,11 @@ export const Inputs = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
+  margin: 0 auto;
+  width: 320px;
   margin-top: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 export const SchedulingOptions = styled.div`

@@ -27,6 +27,7 @@ function EditMedicine({ setEditMed }) {
   const medicine = useSelector(state => state.meds.selected);
 
   const [scheduling, setScheduling] = useState(false);
+  const [willDelete, setWillDelete] = useState(false);
   const [quantity, setQuantity] = useState(medicine.quantity);
   const [name, setName] = useState(medicine.name);
 
@@ -62,9 +63,19 @@ function EditMedicine({ setEditMed }) {
     setQuantity(event.target.value);
   }
 
+  function deleteMedicine(event) {
+    event.preventDefault();
+    setWillDelete(true);
+  }
+
+  function surrenderDelete(event) {
+    event.preventDefault();
+    setWillDelete(false);
+  }
+
   return (
     <ModalContainer onClick={onClickOverModalContainer}>
-      {!success && (
+      {!success && !willDelete && (
         <Modal onClick={preventPropagation}>
           <Title>{name || 'Medicamento'}</Title>
           <Description>
@@ -146,16 +157,38 @@ function EditMedicine({ setEditMed }) {
               </SchedulingOptions>
             )}
             <ButtonContainer>
-              <Button fontWeight="bold">Cadastrar</Button>
+              <Button
+                fontWeight="bold"
+                background="#eee"
+                color="#808080"
+                onClick={deleteMedicine}
+              >
+                Excluir
+              </Button>
+              <Button fontWeight="bold">Atualizar</Button>
             </ButtonContainer>
           </Form>
         </Modal>
       )}
-      {success && (
+      {success && !willDelete && (
         <Modal onClick={preventPropagation}>
           <Title>{name}</Title>
           <Description>O medicamento foi editado!</Description>
           <Lottie options={animationOptions} height={150} width={150} />
+        </Modal>
+      )}
+      {willDelete && (
+        <Modal onClick={preventPropagation}>
+          <Title>Excluir medicamento</Title>
+          <Description>{`Tem certeza que deseja excluir ${name}?`}</Description>
+          <ButtonContainer>
+            <Button fontWeight="bold" onClick={surrenderDelete}>
+              Voltar
+            </Button>
+            <Button fontWeight="bold" background="#eee" color="#808080">
+              Excluir
+            </Button>
+          </ButtonContainer>
         </Modal>
       )}
     </ModalContainer>

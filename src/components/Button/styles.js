@@ -11,7 +11,7 @@ export const ButtonContainer = styled.button`
   border-radius: 5px;
   background: ${props => props.background};
   font-size: 14px;
-  font-weight: ${props => props.fontWeigth};
+  font-weight: ${props => props.fontWeightProp};
   cursor: pointer;
 `;
 
@@ -25,6 +25,6 @@ export const LinkContainer = styled(Link)`
   border-radius: 5px;
   background: ${props => props.background};
   font-size: 14px;
-  font-weight: ${props => props.fontWeigth};
+  font-weight: ${props => props.fontWeightProp};
   cursor: pointer;
 `;

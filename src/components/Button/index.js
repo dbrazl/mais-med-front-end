@@ -21,7 +21,7 @@ function Button({
         width={width}
         color={color}
         background={background}
-        fontWeight={fontWeight}
+        fontWeightProp={fontWeight}
         onClick={onClick}
       >
         {children}
@@ -33,7 +33,7 @@ function Button({
       width={width}
       color={color}
       background={background}
-      fontWeight={fontWeight}
+      fontWeightProp={fontWeight}
       onClick={onClick}
     >
       {children}
