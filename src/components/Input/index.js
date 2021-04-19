@@ -12,6 +12,7 @@ function Input({
   onChange,
   background,
   type,
+  textAlign,
 }) {
   return (
     <Field
@@ -23,6 +24,7 @@ function Input({
       onChange={onChange}
       background={background}
       type={type}
+      textAlign={textAlign}
     />
   );
 }
@@ -36,6 +38,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   background: PropTypes.string,
   type: PropTypes.string,
+  textAlign: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -47,6 +50,7 @@ Input.defaultProps = {
   onChange: () => {},
   background: 'white',
   type: 'text',
+  textAlign: 'left',
 };
 
 export default Input;

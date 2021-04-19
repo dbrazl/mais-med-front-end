@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -15,11 +15,15 @@ import {
   List,
 } from './styles';
 
+import NewMedicine from './components/NewMedicine';
+
 import plus from '~/assets/images/plus.svg';
 import pills from '~/assets/images/pills.png';
 import vacine from '~/assets/images/vacine-icon.png';
 
 function Meds() {
+  const [addNewMedicine, setAddNewMedicine] = useState(false);
+
   const meds = useSelector(state => state.meds.data);
 
   function renderMeds(item, index) {
@@ -40,16 +44,24 @@ function Meds() {
     );
   }
 
+  function onClickToAddNewMedicine(event) {
+    event.preventDefault();
+    setAddNewMedicine(true);
+  }
+
   return (
-    <Container>
-      <Header>
-        <AddButton>
-          <Icon src={plus} />
-          <Label>Novo medicamento</Label>
-        </AddButton>
-      </Header>
-      <List>{meds.map(renderMeds)}</List>
-    </Container>
+    <>
+      <Container>
+        <Header>
+          <AddButton onClick={onClickToAddNewMedicine}>
+            <Icon src={plus} />
+            <Label>Novo medicamento</Label>
+          </AddButton>
+        </Header>
+        <List>{meds.map(renderMeds)}</List>
+      </Container>
+      {addNewMedicine && <NewMedicine setAddNewMedicine={setAddNewMedicine} />}
+    </>
   );
 }
 
