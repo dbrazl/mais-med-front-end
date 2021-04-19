@@ -43,14 +43,19 @@ function SignIn() {
       <Form>
         <Title>Login</Title>
         <Margin marginTop="20px">
-          <Input placeholder="E-mail" value={email} onChange={onChangeEmail} />
+          <Input
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={onChangeEmail}
+          />
         </Margin>
         <Margin marginTop="20px">
           <Input
+            type="password"
             placeholder="Senha"
             value={password}
             onChange={onChangePassword}
-            type="password"
           />
         </Margin>
         <Buttons>

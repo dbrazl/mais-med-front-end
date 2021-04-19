@@ -9,6 +9,7 @@ import RankName from '~/pages/RankName';
 import Statistics from '~/pages/Statistics';
 import Meds from '~/pages/Meds';
 import Vacinations from '~/pages/Vacinations';
+import Settings from '~/pages/Settings';
 
 function Routes() {
   return (
@@ -31,6 +32,13 @@ function Routes() {
         isPrivate
         isDashboard
         component={Vacinations}
+      />
+      <Route
+        path="/settings"
+        exact
+        isPrivate
+        isDashboard
+        component={Settings}
       />
     </Switch>
   );
