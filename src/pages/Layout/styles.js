@@ -27,6 +27,15 @@ export const Page = styled.main`
   background: ${colors.grey};
 `;
 
+export const ExitButton = styled.button`
+  position: fixed;
+  top: 25px;
+  right: 50px;
+  font-weight: bold;
+  background: transparent;
+  cursor: pointer;
+`;
+
 export const InputName = styled.input`
   margin-top: 50px;
   font-size: 18px;

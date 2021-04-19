@@ -4,9 +4,9 @@ import { persistReducer } from 'redux-persist';
 export default reducers => {
   const persistedReducer = persistReducer(
     {
-      key: 'leigoStore',
+      key: 'mais-med',
       storage,
-      whitelist: ['auth', 'user', 'cart'],
+      whitelist: ['menu'],
     },
     reducers
   );

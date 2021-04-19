@@ -15,6 +15,7 @@ export const ExitButton = styled.button`
   right: 50px;
   font-weight: bold;
   background: transparent;
+  cursor: pointer;
 `;
 
 export const Form = styled.form`

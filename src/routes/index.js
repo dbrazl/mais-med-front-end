@@ -7,6 +7,7 @@ import SignUp from '~/pages/SignUp';
 import Location from '~/pages/Location';
 import RankName from '~/pages/RankName';
 import Statistics from '~/pages/Statistics';
+import Meds from '~/pages/Meds';
 
 function Routes() {
   return (
@@ -22,6 +23,7 @@ function Routes() {
         isDashboard
         component={Statistics}
       />
+      <Route path="/meds" exact isPrivate isDashboard component={Meds} />
     </Switch>
   );
 }

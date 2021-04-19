@@ -14,6 +14,7 @@ import {
   Icon,
   Label,
   Indicator,
+  ExitButton,
 } from './styles';
 
 import graph from '~/assets/images/graph.svg';
@@ -39,25 +40,35 @@ function Layout({ children }) {
 
   return (
     <Container>
+      <ExitButton>Sair</ExitButton>
       <Menu>
         <InputName placeholder="Posto de atendimento" />
         <MenuList>
-          <MenuItem onClick={() => onClickMenuItem(page.STATISTICS)}>
+          <MenuItem
+            to={page.STATISTICS}
+            onClick={() => onClickMenuItem(page.STATISTICS)}
+          >
             <Icon src={graph} />
             <Label>Estatísticas</Label>
             {pageSeted === page.STATISTICS && <Indicator />}
           </MenuItem>
-          <MenuItem onClick={() => onClickMenuItem(page.MEDS)}>
+          <MenuItem to={page.MEDS} onClick={() => onClickMenuItem(page.MEDS)}>
             <Icon src={meds} />
             <Label>Medicamentos</Label>
             {pageSeted === page.MEDS && <Indicator />}
           </MenuItem>
-          <MenuItem onClick={() => onClickMenuItem(page.VACINATIONS)}>
+          <MenuItem
+            to={page.VACINATIONS}
+            onClick={() => onClickMenuItem(page.VACINATIONS)}
+          >
             <Icon src={calendar} />
             <Label>Vacinações agendadas</Label>
             {pageSeted === page.VACINATIONS && <Indicator />}
           </MenuItem>
-          <MenuItem onClick={() => onClickMenuItem(page.SETTINGS)}>
+          <MenuItem
+            to={page.SETTINGS}
+            onClick={() => onClickMenuItem(page.SETTINGS)}
+          >
             <Icon src={settings} />
             <Label>Dados de usuário</Label>
             {pageSeted === page.SETTINGS && <Indicator />}
