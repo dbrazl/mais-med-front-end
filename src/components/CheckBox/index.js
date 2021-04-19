@@ -10,7 +10,7 @@ function CheckBox({ checked, label, onChange }) {
   return (
     <Container>
       <Box type="checkbox" id={id} checked={checked} onChange={onChange} />
-      <Label for={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
     </Container>
   );
 }

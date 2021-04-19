@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Field = styled.input`
-  padding-left: 10px;
+  padding-left: ${props => (props.textAlign === 'center' ? '0px' : '10px')};
   width: ${props => `calc(${props.width} - 10px)`};
   height: 40px;
   border-radius: 5px;

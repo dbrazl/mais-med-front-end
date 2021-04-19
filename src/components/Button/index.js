@@ -22,7 +22,7 @@ function Button({
         color={color}
         background={background}
         fontWeight={fontWeight}
-        onCLick={onClick}
+        onClick={onClick}
       >
         {children}
       </LinkContainer>
@@ -34,7 +34,7 @@ function Button({
       color={color}
       background={background}
       fontWeight={fontWeight}
-      onCLick={onClick}
+      onClick={onClick}
     >
       {children}
     </ButtonContainer>

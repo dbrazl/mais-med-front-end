@@ -11,6 +11,13 @@ export function indexMedsSuccess(data) {
   };
 }
 
+export function setSelectMed(data) {
+  return {
+    type: '@MEDS/SET_SELECT_MED',
+    payload: data,
+  };
+}
+
 export function medsProcedureError(message) {
   return {
     type: '@MEDS/PROCEDURE_ERROR',

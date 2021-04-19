@@ -23,6 +23,11 @@ const INITIAL_STATE = {
       needSchedule: true,
     },
   ],
+  selected: {
+    name: '',
+    quantity: 0,
+    needSchedule: false,
+  },
 };
 
 export default function meds(state = INITIAL_STATE, action) {
@@ -33,6 +38,12 @@ export default function meds(state = INITIAL_STATE, action) {
 
       case '@MEDS/INDEX_MEDS_SUCESS':
         draft.data = action.payload.data;
+        break;
+
+      case '@MEDS/SET_SELECT_MED':
+        draft.selected.name = action.payload.name;
+        draft.selected.quantity = action.payload.quantity;
+        draft.selected.needSchedule = action.payload.needSchedule;
         break;
 
       case '@MEDS/PROCEDURE_ERROR':

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectMed } from '~/store/modules/meds/actions';
 
 import {
   Container,
@@ -16,6 +17,7 @@ import {
 } from './styles';
 
 import NewMedicine from './components/NewMedicine';
+import EditMedicine from './components/EditMedicine';
 
 import plus from '~/assets/images/plus.svg';
 import pills from '~/assets/images/pills.png';
@@ -23,15 +25,18 @@ import vacine from '~/assets/images/vacine-icon.png';
 
 function Meds() {
   const [addNewMedicine, setAddNewMedicine] = useState(false);
+  const [editMed, setEditMed] = useState(false);
 
   const meds = useSelector(state => state.meds.data);
+
+  const dispatch = useDispatch();
 
   function renderMeds(item, index) {
     const isVacine = item.name.includes('Vacina');
     const quantity = `${item.quantity} un`;
 
     return (
-      <Item>
+      <Item onClick={() => onClickOverMed(item)} key={index.toString()}>
         <LeftSide>
           <Icon src={isVacine ? vacine : pills} />
           <Labels>
@@ -49,6 +54,11 @@ function Meds() {
     setAddNewMedicine(true);
   }
 
+  function onClickOverMed(item) {
+    dispatch(setSelectMed(item));
+    setEditMed(true);
+  }
+
   return (
     <>
       <Container>
@@ -61,6 +71,7 @@ function Meds() {
         <List>{meds.map(renderMeds)}</List>
       </Container>
       {addNewMedicine && <NewMedicine setAddNewMedicine={setAddNewMedicine} />}
+      {editMed && <EditMedicine setEditMed={setEditMed} />}
     </>
   );
 }
