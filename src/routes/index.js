@@ -4,12 +4,14 @@ import Route from './route';
 
 import SignIn from '../pages/SignIn';
 import SignUp from '~/pages/SignUp';
+import Location from '~/pages/Location';
 
 function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
       <Route path="/register" exact component={SignUp} />
+      <Route path="/location" exact isPrivate component={Location} />
     </Switch>
   );
 }
