@@ -12,9 +12,10 @@ export const ButtonContainer = styled.button`
   background: ${props => props.background};
   font-size: 14px;
   font-weight: ${props => props.fontWeigth};
+  cursor: pointer;
 `;
 
-export const LinkContainer = styled.button`
+export const LinkContainer = styled(Link)`
   width: ${props => props.width};
   height: 40px;
   display: flex;
@@ -25,4 +26,5 @@ export const LinkContainer = styled.button`
   background: ${props => props.background};
   font-size: 14px;
   font-weight: ${props => props.fontWeigth};
+  cursor: pointer;
 `;

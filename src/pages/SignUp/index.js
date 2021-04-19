@@ -5,14 +5,15 @@ import {
   Form,
   Title,
   Margin,
-  Buttons,
-  Restore,
+  ButtonContainer,
+  Navigator,
   BackButton,
+  LinkTo,
 } from './styles';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-function SignIn() {
+function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDesktopScreen, setIsDesktopScreen] = useState(window.screen.width);
@@ -37,11 +38,14 @@ function SignIn() {
 
   return (
     <Container>
-      <BackButton href="#">
-        {isDesktopScreen ? 'Página inicial' : 'voltar'}
-      </BackButton>
+      <header>
+        <Navigator>
+          {isDesktopScreen && <BackButton>Página inicial</BackButton>}
+          <LinkTo to="/">Login</LinkTo>
+        </Navigator>
+      </header>
       <Form>
-        <Title>Login</Title>
+        <Title>Cadastro</Title>
         <Margin marginTop="20px">
           <Input placeholder="E-mail" value={email} onChange={onChangeEmail} />
         </Margin>
@@ -53,20 +57,12 @@ function SignIn() {
             type="password"
           />
         </Margin>
-        <Buttons>
-          <Button link to="/register" background="transparent" color="black">
-            Criar conta
-          </Button>
-          <Button>Entrar</Button>
-        </Buttons>
-        <Restore>
-          <Button link to="" background="transparent" color="black">
-            Recuperar conta
-          </Button>
-        </Restore>
+        <ButtonContainer>
+          <Button>Continuar</Button>
+        </ButtonContainer>
       </Form>
     </Container>
   );
 }
 
-export default SignIn;
+export default SignUp;

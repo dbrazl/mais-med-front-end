@@ -9,9 +9,9 @@ export default function RouteWrapper({
   isPrivate,
   ...rest
 }) {
-  const signed = store.getState()?.auth?.status?.signed;
+  // const signed = store.getState()?.auth?.status?.signed;
 
-  if (!signed && isPrivate) return <Redirect to="/" />;
+  // if (!signed && isPrivate) return <Redirect to="/" />;
 
   return <Route {...rest} render={props => <Component {...props} />} />;
 }
