@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { signInRequest } from '~/store/modules/auth/actions';
+
 import {
   Container,
   Form,
@@ -16,6 +19,8 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDesktopScreen, setIsDesktopScreen] = useState(window.screen.width);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.addEventListener('resize', onResizeWindow);
@@ -35,12 +40,17 @@ function SignIn() {
     setPassword(event?.target?.value || '');
   }
 
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(signInRequest({ email, password }));
+  }
+
   return (
     <Container>
       <BackButton href="#">
         {isDesktopScreen ? 'Página inicial' : 'voltar'}
       </BackButton>
-      <Form>
+      <Form onSubmit={onSubmit}>
         <Title>Login</Title>
         <Margin marginTop="20px">
           <Input

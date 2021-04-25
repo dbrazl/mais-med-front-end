@@ -16,8 +16,8 @@ function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
       <Route path="/register" exact component={SignUp} />
-      <Route path="/location" exact isPrivate component={Location} />
-      <Route path="/name" exact isPrivate component={RankName} />
+      <Route path="/location" exact component={Location} />
+      <Route path="/name" exact component={RankName} />
       <Route
         path="/statistics"
         exact

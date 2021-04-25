@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import history from '~/services/history';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '~/store/modules/menu/actions';
+import { singOut } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -38,9 +40,14 @@ function Layout({ children }) {
     dispatch(setPage(page));
   }
 
+  function onSightOut() {
+    dispatch(singOut());
+    history.push('/');
+  }
+
   return (
     <Container>
-      <ExitButton>Sair</ExitButton>
+      <ExitButton onClick={onSightOut}>Sair</ExitButton>
       <Menu>
         <InputName placeholder="Posto de atendimento" />
         <MenuList>

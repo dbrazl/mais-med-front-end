@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import history from '~/services/history';
 
 import Layout from '~/pages/Layout';
 
@@ -12,9 +13,10 @@ export default function RouteWrapper({
   isDashboard,
   ...rest
 }) {
-  // const signed = store.getState()?.auth?.status?.signed;
+  const authentificated = store.getState()?.auth?.status?.authentificated;
 
-  // if (!signed && isPrivate) return <Redirect to="/" />;
+  if (!authentificated && isPrivate) history.push('/');
+  if (authentificated && !isPrivate) history.push('/statistics');
 
   if (isDashboard)
     return (
