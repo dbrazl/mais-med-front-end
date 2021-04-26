@@ -6,6 +6,8 @@ const api = axios.create({
 
 const routes = {
   signIn: '/session',
+  signUp: '/pharms',
+  searchAddress: 'https://maps.googleapis.com/maps/api/geocode/json',
 };
 
 export { routes };

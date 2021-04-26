@@ -70,3 +70,8 @@ export const LinkTo = styled(Link)`
     margin-right: 50px;
   }
 `;
+
+export const Error = styled.p`
+  font-size: 14px;
+  color: white;
+`;

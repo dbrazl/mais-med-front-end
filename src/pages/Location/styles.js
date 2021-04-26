@@ -81,3 +81,9 @@ export const Icon = styled.img`
 export const Label = styled.p`
   margin-right: 10px;
 `;
+
+export const Button = styled.button`
+  margin-top: 10px;
+  background: transparent;
+  cursor: pointer;
+`;
