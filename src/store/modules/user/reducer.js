@@ -67,10 +67,12 @@ export default function users(state = INITIAL_STATE, action) {
 
       case Types.SEARCH_LAT_LONG_REQUEST:
         draft.status.loading = true;
+        draft.status.foundAddress = false;
         break;
 
       case Types.SEARCH_LAT_LONG_SUCCESS:
         draft.status.loading = false;
+        draft.status.foundAddress = true;
         draft.register.location.latitude = action.payload.latitude;
         draft.register.location.longitude = action.payload.longitude;
         draft.register.address = action.payload.address;

@@ -11,7 +11,6 @@ import {
 
 import {
   Container,
-  ExitButton,
   Form,
   Title,
   Description,
@@ -30,6 +29,7 @@ function Location() {
   const addressState = useSelector(state => state.user.register.address);
   const foundAddress = useSelector(state => state.user.status.foundAddress);
   const registerStep = useSelector(state => state.user.status.registerStep);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setAddress(addressState);
@@ -49,6 +49,8 @@ function Location() {
   function onChangeAddress(event) {
     setAddress(event.target.value);
 
+    if (error) setError(false);
+
     if (foundAddress && addressState !== address)
       dispatch(setFoundAddressToFalse());
   }
@@ -58,14 +60,20 @@ function Location() {
     dispatch(searchLatLongRequest(address));
   }
 
+  function goToNameRoute() {
+    if (foundAddress) history.push('/name');
+    else setError(true);
+  }
+
   return (
     <Container>
-      <ExitButton>Sair</ExitButton>
       <Form onSubmit={onSubmit}>
         <Title>Olá administrador!</Title>
-        <Description>
-          Adicione o endereço do posto de atendimento, ou permita que coletemos
-          ele automaticamente.
+        <Description error={error}>
+          {error
+            ? 'Você esqueceu de informar o endereço! Informe-o para prosseguir.'
+            : `Adicione o endereço do posto de atendimento, ou permita que coletemos
+          ele automaticamente.`}
         </Description>
         <Input
           placeholder="Endereço"
@@ -76,11 +84,11 @@ function Location() {
         {address?.length > 0 && !foundAddress && (
           <Button>Buscar endereço</Button>
         )}
-        <Continue>
-          <Label>Continuar</Label>
-          <Icon src={arrowRight} />
-        </Continue>
       </Form>
+      <Continue onClick={goToNameRoute}>
+        <Label>Continuar</Label>
+        <Icon src={arrowRight} />
+      </Continue>
     </Container>
   );
 }

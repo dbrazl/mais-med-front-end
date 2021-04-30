@@ -18,7 +18,6 @@ import arrowRight from '~/assets/images/arrow-right.svg';
 function RankName() {
   return (
     <Container>
-      <ExitButton>Sair</ExitButton>
       <Form>
         <Title>Beleza!</Title>
         <Description>
