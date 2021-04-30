@@ -111,6 +111,10 @@ export default function users(state = INITIAL_STATE, action) {
         draft.status.registerStep = action.payload.step;
         break;
 
+      case Types.RESET_USER_EXIST:
+        draft.status.userExist = INITIAL_STATE.status.userExist;
+        break;
+
       default:
         break;
     }

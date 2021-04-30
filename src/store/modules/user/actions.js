@@ -96,6 +96,12 @@ export function resetUser() {
   };
 }
 
+export function resetExistUser() {
+  return {
+    type: Types.RESET_USER_EXIST,
+  };
+}
+
 export function userProcedureFail({ message, path, reasons }) {
   return {
     type: Types.PROCEDURE_FAIL,

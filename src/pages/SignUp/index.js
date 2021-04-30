@@ -6,6 +6,7 @@ import {
   userExistRequest,
   saveEmailPassword,
   setRegisterStep,
+  resetExistUser,
 } from '~/store/modules/user/actions';
 
 import {
@@ -34,6 +35,7 @@ function SignUp() {
 
   useEffect(() => {
     window.addEventListener('resize', onResizeWindow);
+    dispatch(resetExistUser());
 
     return () => window.removeEventListener('resize', onResizeWindow);
   }, []);
