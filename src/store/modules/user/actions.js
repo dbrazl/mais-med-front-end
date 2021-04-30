@@ -77,6 +77,12 @@ export function setRegisterStep(step) {
   };
 }
 
+export function resetUser() {
+  return {
+    type: Types.RESET_USER,
+  };
+}
+
 export function userProcedureFail({ message, path, reasons }) {
   return {
     type: Types.PROCEDURE_FAIL,

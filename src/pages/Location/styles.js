@@ -10,6 +10,15 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
+export const ExitButton = styled.button`
+  position: fixed;
+  top: 25px;
+  right: 50px;
+  font-weight: bold;
+  background: transparent;
+  cursor: pointer;
+`;
+
 export const Form = styled.form`
   width: 300px;
   display: flex;

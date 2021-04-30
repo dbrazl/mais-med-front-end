@@ -8,10 +8,12 @@ import {
   searchLatLongRequest,
   setFoundAddressToFalse,
   setRegisterStep,
+  resetUser,
 } from '~/store/modules/user/actions';
 
 import {
   Container,
+  ExitButton,
   Form,
   Title,
   Description,
@@ -70,8 +72,15 @@ function Location() {
     } else setError(true);
   }
 
+  function onCancelRegister(event) {
+    event.preventDefault();
+    dispatch(resetUser());
+    history.push('/register');
+  }
+
   return (
     <Container>
+      <ExitButton onClick={onCancelRegister}>Cancelar</ExitButton>
       <Form onSubmit={onSubmit}>
         <Title>Olá administrador!</Title>
         <Description error={error}>

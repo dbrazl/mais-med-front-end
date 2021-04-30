@@ -3,10 +3,15 @@ import history from '~/services/history';
 import _ from 'lodash';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setName, storeUserRequest } from '~/store/modules/user/actions';
+import {
+  setName,
+  storeUserRequest,
+  setRegisterStep,
+} from '~/store/modules/user/actions';
 
 import {
   Container,
+  ExitButton,
   Form,
   Title,
   Description,
@@ -43,8 +48,15 @@ function RankName() {
     else setError(true);
   }
 
+  function goToLocation(event) {
+    event.preventDefault();
+    dispatch(setRegisterStep(2));
+    history.push('/location');
+  }
+
   return (
     <Container>
+      <ExitButton onClick={goToLocation}>Voltar</ExitButton>
       <Form>
         <Title>{error ? 'Nada beleza!' : 'Beleza!'}</Title>
         <Description error={error}>

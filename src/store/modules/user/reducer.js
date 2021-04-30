@@ -90,6 +90,12 @@ export default function users(state = INITIAL_STATE, action) {
         draft.error.reasons = action.payload.reasons;
         break;
 
+      case Types.RESET_USER:
+        draft.register = INITIAL_STATE.register;
+        draft.status = INITIAL_STATE.status;
+        draft.error = INITIAL_STATE.error;
+        break;
+
       case Types.SET_REGISTER_STEP:
         draft.status.registerStep = action.payload.step;
         break;
