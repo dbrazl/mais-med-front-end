@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   saveLocation,
   searchLatLongRequest,
+  setFoundAddressToFalse,
 } from '~/store/modules/user/actions';
 
 import {
@@ -26,9 +27,10 @@ import arrowRight from '~/assets/images/arrow-right.svg';
 function Location() {
   const [address, setAddress] = useState('');
   const addressState = useSelector(state => state.user.register.address);
+  const foundAddress = useSelector(state => state.user.status.foundAddress);
 
   useEffect(() => {
-    if (address !== '') setAddress(addressState);
+    setAddress(addressState);
   }, [addressState]);
 
   const dispatch = useDispatch();
@@ -42,6 +44,9 @@ function Location() {
 
   function onChangeAddress(event) {
     setAddress(event.target.value);
+
+    if (foundAddress && addressState !== address)
+      dispatch(setFoundAddressToFalse());
   }
 
   function onSubmit(event) {
@@ -60,11 +65,13 @@ function Location() {
         </Description>
         <Input
           placeholder="Endereço"
-          value={address}
+          value={address || ''}
           onChange={onChangeAddress}
         />
-        {address.length <= 0 && <GeoButton onClick={getActualLocation} />}
-        {address.length > 0 && <Button>Buscar endereço</Button>}
+        {address?.length <= 0 && <GeoButton onClick={getActualLocation} />}
+        {address?.length > 0 && !foundAddress && (
+          <Button>Buscar endereço</Button>
+        )}
         <Continue>
           <Label>Continuar</Label>
           <Icon src={arrowRight} />

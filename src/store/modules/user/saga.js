@@ -1,4 +1,3 @@
-import env from 'react-dotenv';
 import Types from './types';
 import api, { routes } from '~/services/api';
 import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
@@ -45,23 +44,19 @@ function* searchAddress() {
       state => state.user.register.location
     );
 
-    const GOOGLE_API_KEY = env.GOOGLE_KEY || '';
-
-    const query = `?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+    const query = `?latitude=${latitude}&longitude=${longitude}`;
 
     const { response } = yield race({
       response: call(api.get, `${routes.searchAddress}${query}`),
       timout: call(timer),
     });
 
-    const address = response.data?.results[0]?.formatted_address;
-    const neighborhood = response.data?.results[0]?.address_components?.find(
-      one => one?.types?.includes('sublocality')
-    )?.long_name;
+    const address = response.data?.address;
+    const neighborhood = response.data?.neighborhood;
 
     yield put(searchAddressSuccess({ address, neighborhood }));
   } catch (error) {
-    yield put(errorHandler(error, userProcedureFail));
+    yield errorHandler(error, userProcedureFail);
   }
 }
 
@@ -69,27 +64,23 @@ function* searchLatLong({ payload }) {
   try {
     const { address: search } = payload;
 
-    const GOOGLE_API_KEY = env.GOOGLE_KEY || '';
-
-    const query = `?address=${search}&key=${GOOGLE_API_KEY}`;
+    const query = `?address=${search}`;
 
     const { response } = yield race({
-      response: call(api.get, `${routes.searchAddress}${query}`),
+      response: call(api.get, `${routes.searchLatLong}${query}`),
       timeout: call(timer),
     });
 
-    const latitude = response.data?.results[0]?.geometry?.location?.lat;
-    const longitude = response.data?.results[0]?.geometry?.location?.lng;
-    const address = response.data?.results[0]?.formatted_address;
-    const neighborhood = response.data?.results[0]?.address_components?.find(
-      one => one?.types?.includes('sublocality')
-    )?.long_name;
+    const latitude = response.data?.latitude;
+    const longitude = response.data?.longitude;
+    const address = response.data?.address;
+    const neighborhood = response.data?.neighborhood;
 
     yield put(
       searchLatLongSuccess({ latitude, longitude, address, neighborhood })
     );
   } catch (error) {
-    yield put(errorHandler(error, userProcedureFail));
+    yield errorHandler(error, userProcedureFail);
   }
 }
 

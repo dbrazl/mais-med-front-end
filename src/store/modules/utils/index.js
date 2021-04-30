@@ -12,32 +12,31 @@ export function* errorHandler(error, callback) {
   let path = null;
   let reasons = null;
 
-  treat: {
-    if (error.message === 'Network Error') {
+  switch (error.message) {
+    case 'Network Error':
       message = 'Não foi possível fazer a requisição.';
       path = ['server'];
       reasons = ['Servidor está offline.'];
-      break treat;
-    }
+      break;
 
-    if (error.message === 'Timeout') {
+    case 'Timeout':
       message = 'Não foi possível fazer a requisição.';
       path = ['request'];
       reasons = ['A requisição excedeu o tempo limite.'];
-      break treat;
-    }
+      break;
 
-    if (error.message === 'No data on restore') {
+    case 'No data on restore':
       message = 'Não foi possível recuperar o usuário.';
       path = [''];
       reasons = ['O usuário não foi informado.'];
-      break treat;
-    }
+      break;
 
-    const response = error.response.data;
-    message = response.message;
-    path = response.path;
-    reasons = response.reasons;
+    default:
+      const response = error.response.data;
+      message = response.message;
+      path = response.path;
+      reasons = response.reasons;
+      break;
   }
 
   yield put(callback({ message, path, reasons }));

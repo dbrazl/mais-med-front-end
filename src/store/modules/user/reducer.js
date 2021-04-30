@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   },
   status: {
     loading: false,
+    foundAddress: false,
   },
   error: {
     status: false,
@@ -51,12 +52,16 @@ export default function users(state = INITIAL_STATE, action) {
 
       case Types.SEARCH_ADDRESS_REQUEST:
         draft.status.loading = true;
+        draft.status.foundAddress = false;
+        draft.register.address = INITIAL_STATE.register.address;
+        draft.register.neighborhood = INITIAL_STATE.register.neighborhood;
         break;
 
       case Types.SEARCH_ADDRESS_SUCCESS:
         draft.status.loading = false;
         draft.register.address = action.payload.address;
         draft.register.neighborhood = action.payload.neighborhood;
+        draft.status.foundAddress = true;
         break;
 
       case Types.SEARCH_LAT_LONG_REQUEST:
@@ -69,6 +74,10 @@ export default function users(state = INITIAL_STATE, action) {
         draft.register.location.longitude = action.payload.longitude;
         draft.register.address = action.payload.address;
         draft.register.neighborhood = action.payload.neighborhood;
+        break;
+
+      case Types.SET_FOUND_ADDRESS_TO_FALSE:
+        draft.status.foundAddress = false;
         break;
 
       case Types.PROCEDURE_FAIL:

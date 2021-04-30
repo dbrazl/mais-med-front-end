@@ -64,6 +64,12 @@ export function searchLatLongSuccess({
   };
 }
 
+export function setFoundAddressToFalse() {
+  return {
+    type: Types.SET_FOUND_ADDRESS_TO_FALSE,
+  };
+}
+
 export function userProcedureFail({ message, path, reasons }) {
   return {
     type: Types.PROCEDURE_FAIL,
