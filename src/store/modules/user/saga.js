@@ -9,6 +9,7 @@ import {
   searchAddressSuccess,
   searchLatLongSuccess,
   userProcedureFail,
+  resetUser,
 } from './actions';
 
 function* storeUser() {
@@ -29,6 +30,7 @@ function* storeUser() {
     });
 
     yield put(storeUserSuccess());
+    yield put(resetUser());
 
     history.push('/statistics');
   } catch (error) {
