@@ -4,6 +4,7 @@ import api, { routes } from '~/services/api';
 import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
 import { errorHandler, timer } from '../utils';
 import {
+  userExistSuccess,
   storeUserSuccess,
   searchAddressRequest,
   searchAddressSuccess,
@@ -11,6 +12,21 @@ import {
   userProcedureFail,
   resetUser,
 } from './actions';
+
+function* userExist({ payload }) {
+  try {
+    const { email } = payload;
+
+    yield race({
+      response: call(api.get, `${routes.userExist}?email=${email}`),
+      timeout: call(timer),
+    });
+
+    yield put(userExistSuccess());
+  } catch (error) {
+    yield errorHandler(error, userProcedureFail);
+  }
+}
 
 function* storeUser() {
   try {
@@ -89,6 +105,7 @@ function* saveLocation() {
 }
 
 export default all([
+  takeLatest(Types.USER_EXIST_REQUEST, userExist),
   takeLatest(Types.STORE_USER_REQUEST, storeUser),
   takeLatest(Types.SEARCH_ADDRESS_REQUEST, searchAddress),
   takeLatest(Types.SEARCH_LAT_LONG_REQUEST, searchLatLong),

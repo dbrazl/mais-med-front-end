@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   },
   status: {
     loading: false,
+    userExist: false,
     foundAddress: false,
     registerStep: 1,
   },
@@ -29,6 +30,16 @@ const INITIAL_STATE = {
 export default function users(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
+      case Types.USER_EXIST_REQUEST:
+        draft.status.loading = true;
+        draft.status.userExist = false;
+        break;
+
+      case Types.USER_EXIST_SUCCESS:
+        draft.status.loading = false;
+        draft.status.userExist = true;
+        break;
+
       case Types.SAVE_EMAIL_PASSWORD:
         draft.register.email = action.payload.email;
         draft.register.password = action.payload.password;

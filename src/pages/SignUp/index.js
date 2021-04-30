@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import history from '~/services/history';
 
-import { useDispatch } from 'react-redux';
-import { saveEmailPassword, setRegisterStep } from '~/store/modules/user/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  userExistRequest,
+  saveEmailPassword,
+  setRegisterStep,
+} from '~/store/modules/user/actions';
 
 import {
   Container,
@@ -24,6 +28,7 @@ function SignUp() {
   const [isDesktopScreen, setIsDesktopScreen] = useState(window.screen.width);
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+  const userExist = useSelector(state => state.user.status.userExist);
 
   const dispatch = useDispatch();
 
@@ -32,6 +37,21 @@ function SignUp() {
 
     return () => window.removeEventListener('resize', onResizeWindow);
   }, []);
+
+  useEffect(() => {
+    if (userExist) setErrorEmail('O e-mail já foi cadastrado');
+    else setErrorEmail('');
+
+    if (!userExist && !isEmpty(email) && !isEmpty(password)) {
+      dispatch(saveEmailPassword({ email, password }));
+      dispatch(setRegisterStep(2));
+      history.push('/location');
+    }
+  }, [userExist]);
+
+  function isEmpty(string) {
+    return string?.length <= 0;
+  }
 
   function onResizeWindow(event) {
     setIsDesktopScreen(window.screen.width >= 1152);
@@ -45,7 +65,7 @@ function SignUp() {
     setPassword(event?.target?.value || '');
   }
 
-  function hasErrors() {
+  function hasValidationErrors() {
     const emailParser = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
     const PASSWORD_LENGTH = 6;
 
@@ -65,11 +85,7 @@ function SignUp() {
   function onSubmit(event) {
     event.preventDefault();
 
-    if (!hasErrors()) {
-      dispatch(saveEmailPassword({ email, password }));
-      dispatch(setRegisterStep(2));
-      history.push('/location');
-    }
+    if (!hasValidationErrors()) dispatch(userExistRequest(email));
   }
 
   return (

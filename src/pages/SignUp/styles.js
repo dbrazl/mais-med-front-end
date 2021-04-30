@@ -74,4 +74,5 @@ export const LinkTo = styled(Link)`
 export const Error = styled.p`
   font-size: 14px;
   color: white;
+  font-weight: bold;
 `;

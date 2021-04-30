@@ -9,6 +9,7 @@ const routes = {
   signUp: '/pharms',
   searchAddress: '/map/search/address',
   searchLatLong: '/map/search/latLong',
+  userExist: '/pharms/user/exist',
 };
 
 export { routes };

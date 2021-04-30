@@ -1,5 +1,18 @@
 import Types from './types';
 
+export function userExistRequest(email) {
+  return {
+    type: Types.USER_EXIST_REQUEST,
+    payload: { email },
+  };
+}
+
+export function userExistSuccess() {
+  return {
+    type: Types.USER_EXIST_SUCCESS,
+  };
+}
+
 export function saveEmailPassword({ email, password }) {
   return {
     type: Types.SAVE_EMAIL_PASSWORD,
