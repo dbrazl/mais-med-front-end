@@ -14,9 +14,9 @@ export function saveLocation({ longitude, latitude }) {
   };
 }
 
-export function saveName(name) {
+export function setName(name) {
   return {
-    type: Types.SAVE_NAME,
+    type: Types.SET_NAME,
     payload: { name },
   };
 }
@@ -73,8 +73,8 @@ export function setFoundAddressToFalse() {
 export function setRegisterStep(step) {
   return {
     type: Types.SET_REGISTER_STEP,
-    payload: { step }
-  }
+    payload: { step },
+  };
 }
 
 export function userProcedureFail({ message, path, reasons }) {

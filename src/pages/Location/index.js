@@ -7,6 +7,7 @@ import {
   saveLocation,
   searchLatLongRequest,
   setFoundAddressToFalse,
+  setRegisterStep,
 } from '~/store/modules/user/actions';
 
 import {
@@ -60,9 +61,13 @@ function Location() {
     dispatch(searchLatLongRequest(address));
   }
 
-  function goToNameRoute() {
-    if (foundAddress) history.push('/name');
-    else setError(true);
+  function goToNameRoute(event) {
+    event.preventDefault();
+
+    if (foundAddress) {
+      dispatch(setRegisterStep(3));
+      history.push('/name');
+    } else setError(true);
   }
 
   return (
@@ -73,7 +78,7 @@ function Location() {
           {error
             ? 'Você esqueceu de informar o endereço! Informe-o para prosseguir.'
             : `Adicione o endereço do posto de atendimento, ou permita que coletemos
-          ele automaticamente.`}
+          ele automaticamente usando sua posição atual.`}
         </Description>
         <Input
           placeholder="Endereço"

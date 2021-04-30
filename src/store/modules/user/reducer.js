@@ -39,7 +39,7 @@ export default function users(state = INITIAL_STATE, action) {
         draft.register.location.latitude = action.payload.latitude;
         break;
 
-      case Types.SAVE_NAME:
+      case Types.SET_NAME:
         draft.register.name = action.payload.name;
         break;
 

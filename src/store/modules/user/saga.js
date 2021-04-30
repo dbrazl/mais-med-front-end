@@ -1,9 +1,9 @@
 import Types from './types';
+import history from '~/services/history';
 import api, { routes } from '~/services/api';
 import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
 import { errorHandler, timer } from '../utils';
 import {
-  storeUserRequest,
   storeUserSuccess,
   searchAddressRequest,
   searchAddressSuccess,
@@ -11,14 +11,10 @@ import {
   userProcedureFail,
 } from './actions';
 
-function* saveName() {
-  yield put(storeUserRequest());
-}
-
 function* storeUser() {
   try {
     const { name, email, password, location, neighborhood } = yield select(
-      state => state.register
+      state => state.user.register
     );
 
     yield race({
@@ -33,8 +29,10 @@ function* storeUser() {
     });
 
     yield put(storeUserSuccess());
+
+    history.push('/statistics');
   } catch (error) {
-    yield put(errorHandler(error, userProcedureFail));
+    yield errorHandler(error, userProcedureFail);
   }
 }
 
@@ -89,7 +87,6 @@ function* saveLocation() {
 }
 
 export default all([
-  takeLatest(Types.SAVE_NAME, saveName),
   takeLatest(Types.STORE_USER_REQUEST, storeUser),
   takeLatest(Types.SEARCH_ADDRESS_REQUEST, searchAddress),
   takeLatest(Types.SEARCH_LAT_LONG_REQUEST, searchLatLong),

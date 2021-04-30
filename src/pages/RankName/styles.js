@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '~/styles/colors';
 
 export const Container = styled.div`
   width: 100%;
@@ -7,15 +8,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const ExitButton = styled.button`
-  position: fixed;
-  top: 25px;
-  right: 50px;
-  font-weight: bold;
-  background: transparent;
-  cursor: pointer;
 `;
 
 export const Form = styled.form`
@@ -42,6 +34,8 @@ export const Title = styled.h1`
 export const Description = styled.p`
   width: 100%;
   font-size: 16px;
+  color: ${props => (props.error ? colors.red : 'black')};
+  font-weight: ${props => (props.error ? 'bold' : 'normal')};
 
   @media (min-width: 1152px) {
     font-size: 18px;
@@ -70,6 +64,7 @@ export const Continue = styled.button`
   align-items: center;
   flex-direction: row;
   background: transparent;
+  cursor: pointer;
 `;
 
 export const Icon = styled.img`

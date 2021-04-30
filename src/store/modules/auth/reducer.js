@@ -1,5 +1,6 @@
 import produce from 'immer';
 import Types from './types';
+import UserTypes from '../user/types';
 
 const INITIAL_STATE = {
   status: {
@@ -28,6 +29,10 @@ export default function auth(state = INITIAL_STATE, action) {
 
       case Types.SIGN_OUT:
         draft.status.authentificated = false;
+        break;
+
+      case UserTypes.STORE_USER_SUCCESS:
+        draft.status.authentificated = true;
         break;
 
       case Types.PROCEDURE_FAIL:
