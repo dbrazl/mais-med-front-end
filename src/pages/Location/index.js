@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import history from '~/services/history';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -28,9 +29,12 @@ function Location() {
   const [address, setAddress] = useState('');
   const addressState = useSelector(state => state.user.register.address);
   const foundAddress = useSelector(state => state.user.status.foundAddress);
+  const registerStep = useSelector(state => state.user.status.registerStep);
 
   useEffect(() => {
     setAddress(addressState);
+
+    if (registerStep !== 2) history.push('/register');
   }, [addressState]);
 
   const dispatch = useDispatch();

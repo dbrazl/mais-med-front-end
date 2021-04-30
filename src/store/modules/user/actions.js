@@ -70,6 +70,13 @@ export function setFoundAddressToFalse() {
   };
 }
 
+export function setRegisterStep(step) {
+  return {
+    type: Types.SET_REGISTER_STEP,
+    payload: { step }
+  }
+}
+
 export function userProcedureFail({ message, path, reasons }) {
   return {
     type: Types.PROCEDURE_FAIL,

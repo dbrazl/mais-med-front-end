@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import history from '~/services/history';
 
 import { useDispatch } from 'react-redux';
-import { saveEmailPassword } from '~/store/modules/user/actions';
+import { saveEmailPassword, setRegisterStep } from '~/store/modules/user/actions';
 
 import {
   Container,
@@ -67,6 +67,7 @@ function SignUp() {
 
     if (!hasErrors()) {
       dispatch(saveEmailPassword({ email, password }));
+      dispatch(setRegisterStep(2));
       history.push('/location');
     }
   }

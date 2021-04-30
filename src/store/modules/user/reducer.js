@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   status: {
     loading: false,
     foundAddress: false,
+    registerStep: 1,
   },
   error: {
     status: false,
@@ -85,6 +86,10 @@ export default function users(state = INITIAL_STATE, action) {
         draft.error.message = action.payload.message;
         draft.error.path = action.payload.path;
         draft.error.reasons = action.payload.reasons;
+        break;
+
+      case Types.SET_REGISTER_STEP:
+        draft.status.registerStep = action.payload.step;
         break;
 
       default:
