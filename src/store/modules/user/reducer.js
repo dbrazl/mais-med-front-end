@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     name: '',
     email: '',
     password: '',
+    newPassword: '',
     location: {
       latitude: 0,
       longitude: 0,
@@ -23,7 +24,7 @@ const INITIAL_STATE = {
     status: false,
     message: '',
     path: [''],
-    reasons: [''],
+    reasons: [],
   },
 };
 
@@ -59,6 +60,15 @@ export default function users(state = INITIAL_STATE, action) {
         break;
 
       case Types.STORE_USER_SUCCESS:
+        draft.status.loading = false;
+        break;
+
+      case Types.UPDATE_USER_REQUEST:
+        draft.status.loading = true;
+        draft.register.newPassword = action.payload.newPassword;
+        break;
+
+      case Types.UPDATE_USER_SUCCESS:
         draft.status.loading = false;
         break;
 

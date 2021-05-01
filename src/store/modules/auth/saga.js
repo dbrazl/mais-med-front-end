@@ -1,4 +1,4 @@
-import { all, takeLatest, call, race, put } from 'redux-saga/effects';
+import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
 import Types from './types';
 import { signInSuccess, authProcedureFail } from './actions';
 import api, { routes } from '~/services/api';
@@ -12,11 +12,18 @@ function* signIn({ payload }) {
       timeout: call(timer),
     });
 
-    const token = response.data.token;
+    const token = response.data?.token;
+    const email = response.data?.email;
+    const name = response.data?.name;
+    const location = response.data?.location;
+    const address = response.data?.address;
+    const neighborhood = response.data?.neighborhood;
 
     if (token) api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess());
+    yield put(
+      signInSuccess({ email, name, location, address, neighborhood, token })
+    );
     history.push('/statistics');
   } catch (error) {
     yield errorHandler(error, authProcedureFail);
@@ -27,7 +34,13 @@ function signOut() {
   api.defaults.headers.Authorization = null;
 }
 
+function* setToken() {
+  const token = yield select(state => state?.auth?.user?.token);
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+}
+
 export default all([
   takeLatest(Types.SIGN_IN_REQUEST, signIn),
   takeLatest(Types.SIGN_OUT, signOut),
+  takeLatest(Types.REHYDRATE, setToken),
 ]);

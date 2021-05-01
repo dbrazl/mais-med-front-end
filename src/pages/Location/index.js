@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import _ from 'lodash';
 import history from '~/services/history';
 
 import { useDispatch, useSelector } from 'react-redux';

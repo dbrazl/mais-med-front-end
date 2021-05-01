@@ -3,6 +3,14 @@ import Types from './types';
 import UserTypes from '../user/types';
 
 const INITIAL_STATE = {
+  user: {
+    email: '',
+    name: '',
+    location: '',
+    address: '',
+    neighborhood: '',
+    token: '',
+  },
   status: {
     loading: false,
     authentificated: false,
@@ -25,6 +33,12 @@ export default function auth(state = INITIAL_STATE, action) {
       case Types.SIGN_IN_SUCCESS:
         draft.status.loading = false;
         draft.status.authentificated = true;
+        draft.user.email = action.payload.email;
+        draft.user.name = action.payload.name;
+        draft.user.location = action.payload.location;
+        draft.user.address = action.payload.address;
+        draft.user.neighborhood = action.payload.neighborhood;
+        draft.user.token = action.payload.token;
         break;
 
       case Types.SIGN_OUT:
@@ -33,6 +47,14 @@ export default function auth(state = INITIAL_STATE, action) {
 
       case UserTypes.STORE_USER_SUCCESS:
         draft.status.authentificated = true;
+        break;
+
+      case UserTypes.UPDATE_USER_REQUEST:
+        draft.user.name = action.payload.name;
+        draft.user.email = action.payload.email;
+        draft.user.location = action.payload.location;
+        draft.user.address = action.payload.address;
+        draft.user.neighborhood = action.payload.neighborhood;
         break;
 
       case Types.PROCEDURE_FAIL:

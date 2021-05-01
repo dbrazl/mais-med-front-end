@@ -1,11 +1,13 @@
 import Types from './types';
 import history from '~/services/history';
 import api, { routes } from '~/services/api';
+import { toast } from 'react-toastify';
 import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
 import { errorHandler, timer } from '../utils';
 import {
   userExistSuccess,
   storeUserSuccess,
+  updateUserSuccess,
   searchAddressRequest,
   searchAddressSuccess,
   searchLatLongSuccess,
@@ -49,6 +51,44 @@ function* storeUser() {
     yield put(resetUser());
 
     history.push('/statistics');
+  } catch (error) {
+    yield errorHandler(error, userProcedureFail);
+  }
+}
+
+function* updateUser({ payload }) {
+  try {
+    const {
+      name,
+      email,
+      password,
+      newPassword,
+      location,
+      address,
+      neighborhood,
+    } = payload;
+
+    let body = {
+      name,
+      email,
+      location,
+      address,
+      neighborhood,
+    };
+
+    if (password) {
+      body.password = password;
+      body.newPassword = newPassword;
+    }
+
+    yield race({
+      response: call(api.put, routes.updateUser, body),
+      timeout: call(timer),
+    });
+
+    yield put(updateUserSuccess(body));
+    yield put(resetUser());
+    toast.success('O usuário foi atualizado!');
   } catch (error) {
     yield errorHandler(error, userProcedureFail);
   }
@@ -107,6 +147,7 @@ function* saveLocation() {
 export default all([
   takeLatest(Types.USER_EXIST_REQUEST, userExist),
   takeLatest(Types.STORE_USER_REQUEST, storeUser),
+  takeLatest(Types.UPDATE_USER_REQUEST, updateUser),
   takeLatest(Types.SEARCH_ADDRESS_REQUEST, searchAddress),
   takeLatest(Types.SEARCH_LAT_LONG_REQUEST, searchLatLong),
   takeLatest(Types.SAVE_LOCATION, saveLocation),

@@ -23,6 +23,7 @@ export const Title = styled.h2`
 
 export const Field = styled.div`
   margin-top: 20px;
+  width: 100%;
   display: flex;
   align-items: center;
 `;
@@ -33,7 +34,7 @@ export const Label = styled.p`
 
 export const Input = styled.input`
   color: #808080;
-  width: 200px;
+  width: 100%;
 `;
 
 export const Address = styled.div`
@@ -43,4 +44,35 @@ export const Address = styled.div`
 
 export const AuthetificationSection = styled.section`
   margin-top: 40px;
+`;
+
+export const GeoWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+export const Button = styled.button`
+  margin-top: 20px;
+  min-width: max-content;
+  background: transparent;
+  cursor: pointer;
+`;
+
+export const ButtonSection = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const SubmitButton = styled.button`
+  width: 150px;
+  height: 45px;
+  border-radius: 5px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 `;

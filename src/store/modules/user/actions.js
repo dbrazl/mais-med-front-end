@@ -46,6 +46,42 @@ export function storeUserSuccess() {
   };
 }
 
+export function updateUserRequest({
+  name,
+  email,
+  password,
+  newPassword,
+  location,
+  address,
+  neighborhood,
+}) {
+  return {
+    type: Types.UPDATE_USER_REQUEST,
+    payload: {
+      name,
+      email,
+      password,
+      newPassword,
+      location,
+      address,
+      neighborhood,
+    },
+  };
+}
+
+export function updateUserSuccess({
+  email,
+  name,
+  location,
+  neighborhood,
+  address,
+}) {
+  return {
+    type: Types.UPDATE_USER_SUCCESS,
+    payload: { email, name, location, neighborhood, address },
+  };
+}
+
 export function searchAddressRequest() {
   return {
     type: Types.SEARCH_ADDRESS_REQUEST,

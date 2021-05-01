@@ -14,5 +14,6 @@ export const Icon = styled.img`
 `;
 
 export const Label = styled.p`
+  width: max-content;
   margin-left: 10px;
 `;

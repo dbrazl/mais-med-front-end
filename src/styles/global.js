@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
   @font-face {
@@ -22,7 +23,14 @@ export default createGlobalStyle`
     font-weight: normal;
     font-size: 14px;
     text-decoration: none;
+  }
+
+  h1, h2, h3, h4, p, textarea, button, a, div {
     color: black;
+  }
+
+  .Toastify__toast-body {
+    color: white;
   }
 
   html,

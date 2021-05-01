@@ -7,6 +7,7 @@ const api = axios.create({
 const routes = {
   signIn: '/session',
   signUp: '/pharms',
+  updateUser: '/pharms',
   searchAddress: '/map/search/address',
   searchLatLong: '/map/search/latLong',
   userExist: '/pharms/user/exist',
