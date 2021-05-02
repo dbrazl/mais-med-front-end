@@ -48,3 +48,27 @@ export const Labels = styled.div`
   display: flex;
   align-items: baseline;
 `;
+
+export const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100% - 130px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const ListEmpty = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+
+  @media (min-width: 1152px) {
+    width: 300px;
+    height: 300px;
+  }
+`;
+
+export const Message = styled.p`
+  margin-top: 20px;
+`;

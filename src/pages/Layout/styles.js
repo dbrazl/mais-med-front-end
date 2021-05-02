@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const Container = styled.div`
   display: grid;
   grid-template-areas: 'menu page';
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 300px 1fr;
   width: 100%;
   height: 100%;
 `;

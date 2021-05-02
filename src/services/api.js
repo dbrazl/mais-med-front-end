@@ -11,6 +11,7 @@ const routes = {
   searchAddress: '/map/search/address',
   searchLatLong: '/map/search/latLong',
   userExist: '/pharms/user/exist',
+  vacinations: '/vacinations',
 };
 
 export { routes };

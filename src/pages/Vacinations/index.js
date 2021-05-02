@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { indexVacinationRequest } from '~/store/modules/vacination/actions';
 
 import mask from '~/services/mask';
 
-import { Container, Icon, Label, Item, Side, Labels, List } from './styles';
+import {
+  Container,
+  Icon,
+  Label,
+  Item,
+  Side,
+  Labels,
+  List,
+  Wrapper,
+  ListEmpty,
+  Message,
+} from './styles';
 
 import pills from '~/assets/images/pills.png';
 import vacine from '~/assets/images/vacine-icon.png';
+import empty from '~/assets/images/vacine-empty.svg';
 
 function Meds() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(indexVacinationRequest());
+  }, []);
+
   const vacinations = useSelector(state => state.vacination.data);
 
   function renderMeds(item, index) {
@@ -36,7 +55,13 @@ function Meds() {
 
   return (
     <Container>
-      <List>{vacinations.map(renderMeds)}</List>
+      {vacinations?.length > 0 && <List>{vacinations.map(renderMeds)}</List>}
+      {vacinations?.length <= 0 && (
+        <Wrapper>
+          <ListEmpty src={empty} />
+          <Message>Não há vacinações cadastradas</Message>
+        </Wrapper>
+      )}
     </Container>
   );
 }
