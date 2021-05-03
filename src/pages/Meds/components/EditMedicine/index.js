@@ -6,6 +6,7 @@ import {
   resetSelected,
   updateMedRequest,
   resetUpdated,
+  deleteMedRequest,
 } from '~/store/modules/meds/actions';
 
 import {
@@ -171,6 +172,7 @@ function EditMedicine({ setEditMed }) {
       name,
       quantity,
       needSchedule: true,
+      willSchedule: scheduling,
       startDate,
       endDate,
       startHour,
@@ -204,6 +206,7 @@ function EditMedicine({ setEditMed }) {
       name,
       quantity,
       needSchedule: false,
+      willSchedule: scheduling,
     };
 
     if (isEmpty(name) || isEmpty(quantity)) setError(true);
@@ -218,6 +221,13 @@ function EditMedicine({ setEditMed }) {
   function surrenderDelete(event) {
     event.preventDefault();
     setWillDelete(false);
+  }
+
+  function onDeleteMed(event) {
+    event.preventDefault();
+    dispatch(deleteMedRequest());
+    setEditMed(false);
+    dispatch(resetUpdated());
   }
 
   return (
@@ -342,7 +352,12 @@ function EditMedicine({ setEditMed }) {
             <Button fontWeight="bold" onClick={surrenderDelete}>
               Voltar
             </Button>
-            <Button fontWeight="bold" background="#eee" color="#808080">
+            <Button
+              fontWeight="bold"
+              background="#eee"
+              color="#808080"
+              onClick={onDeleteMed}
+            >
               Excluir
             </Button>
           </ButtonContainer>

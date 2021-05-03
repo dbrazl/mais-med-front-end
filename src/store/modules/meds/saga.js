@@ -9,6 +9,7 @@ import {
   indexScheduleInfoSuccess,
   updateMedSuccess,
   resetData,
+  deleteMedSuccess,
 } from './actions';
 import { singOut } from '../auth/actions';
 import api, { routes } from '~/services/api';
@@ -67,7 +68,7 @@ function* storeMed({ payload }) {
   }
 }
 
-function* storeSuccess() {
+function* getMedsList() {
   yield put(resetData());
   yield put(indexMedsRequest());
 }
@@ -90,6 +91,10 @@ function* indexScheduleInfo() {
 function* updateMed({ payload }) {
   try {
     const needSchedule = payload?.needSchedule;
+    const needToSchedule = yield select(
+      state => state?.meds?.selected?.needToSchedule
+    );
+    const willSchedule = payload?.willSchedule;
     const medicineId = yield select(state => state?.meds?.selected?.id);
 
     const bodyMedicine = {
@@ -104,7 +109,7 @@ function* updateMed({ payload }) {
       timeout: call(timer),
     });
 
-    if (needSchedule) {
+    if (needToSchedule && willSchedule) {
       const bodySchedule = {
         startDate: payload?.startDate,
         endDate: payload?.endDate,
@@ -118,7 +123,25 @@ function* updateMed({ payload }) {
         response: call(api.put, routes.schedule, bodySchedule),
         timeout: call(timer),
       });
-    } else {
+    }
+
+    if (!needToSchedule && willSchedule) {
+      const bodySchedule = {
+        startDate: payload?.startDate,
+        endDate: payload?.endDate,
+        startHour: payload?.startHour,
+        endHour: payload?.endHour,
+        intervalTime: payload?.intervalTime,
+        medicineId,
+      };
+
+      yield race({
+        response: call(api.post, routes.schedule, bodySchedule),
+        timeout: call(timer),
+      });
+    }
+
+    if (needToSchedule && !willSchedule) {
       yield race({
         response: call(api.delete, `${routes.schedule}/${medicineId}`),
         timeout: call(timer),
@@ -131,9 +154,28 @@ function* updateMed({ payload }) {
   }
 }
 
-function* updateSuccess() {
-  yield put(resetData());
-  yield put(indexMedsRequest());
+function* deleteMed() {
+  try {
+    const medicineId = yield select(state => state?.meds?.selected?.id);
+    const needToSchedule = yield select(
+      state => state?.meds?.selected?.needToSchedule
+    );
+
+    yield race({
+      response: call(api.delete, `${routes.meds}/${medicineId}`),
+      timeout: call(timer),
+    });
+
+    if (needToSchedule)
+      yield race({
+        response: call(api.delete, `${routes.schedule}/${medicineId}`),
+        timeout: call(timer),
+      });
+
+    yield put(deleteMedSuccess());
+  } catch (error) {
+    yield errorHandler(error, medsProcedureError);
+  }
 }
 
 function* procedureError() {
@@ -147,9 +189,11 @@ function* procedureError() {
 export default all([
   takeLatest(Types.INDEX_MEDS_REQUEST, indexMeds),
   takeLatest(Types.STORE_MEDS_REQUEST, storeMed),
-  takeLatest(Types.STORE_MEDS_SUCCESS, storeSuccess),
+  takeLatest(Types.STORE_MEDS_SUCCESS, getMedsList),
   takeLatest(Types.SET_SELECT_MED, indexScheduleInfo),
   takeLatest(Types.UPDATE_MED_REQUEST, updateMed),
-  takeLatest(Types.UPDATE_MED_SUCCESS, updateSuccess),
+  takeLatest(Types.UPDATE_MED_SUCCESS, getMedsList),
+  // takeLatest(Types.DELETE_MED_REQUEST, deleteMed),
+  takeLatest(Types.DELETE_MED_SUCCESS, getMedsList),
   takeLatest(Types.PROCEDURE_ERROR, procedureError),
 ]);

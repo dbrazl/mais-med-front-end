@@ -49,6 +49,7 @@ export function updateMedRequest({
   name,
   quantity,
   needSchedule,
+  willSchedule,
   startDate,
   endDate,
   startHour,
@@ -61,6 +62,7 @@ export function updateMedRequest({
       name,
       quantity,
       needSchedule,
+      willSchedule,
       startDate,
       endDate,
       startHour,
@@ -73,6 +75,18 @@ export function updateMedRequest({
 export function updateMedSuccess() {
   return {
     type: Types.UPDATE_MED_SUCCESS,
+  };
+}
+
+export function deleteMedRequest() {
+  return {
+    type: Types.DELETE_MED_REQUEST,
+  };
+}
+
+export function deleteMedSuccess() {
+  return {
+    type: Types.DELETE_MED_SUCCESS,
   };
 }
 

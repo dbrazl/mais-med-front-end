@@ -61,6 +61,14 @@ export default function meds(state = INITIAL_STATE, action) {
         draft.status.updated = true;
         break;
 
+      case Types.DELETE_MED_REQUEST:
+        draft.status.loading = true;
+        break;
+
+      case Types.DELETE_MED_SUCCESS:
+        draft.status.loading = false;
+        break;
+
       case Types.RESET_REGISTERED:
         draft.status.registered = false;
         break;
