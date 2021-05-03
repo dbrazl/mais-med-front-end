@@ -1,54 +1,67 @@
 import produce from 'immer';
+import Types from './types';
 
 const INITIAL_STATE = {
-  data: [
-    {
-      name: 'Dipirona 100 mg',
-      quantity: 21,
-      needSchedule: false,
-    },
-    {
-      name: 'Ritalina 500 mg',
-      quantity: 10,
-      needSchedule: false,
-    },
-    {
-      name: 'Paracetamal 200 mg',
-      quantity: 45,
-      needSchedule: false,
-    },
-    {
-      name: 'Vacina COVID-19',
-      quantity: 45,
-      needSchedule: true,
-    },
-  ],
+  data: [],
   selected: {
     name: '',
     quantity: 0,
     needSchedule: false,
+  },
+  status: {
+    loading: false,
+    registered: false,
+  },
+  error: {
+    status: false,
+    message: '',
+    path: [],
+    reasons: [],
   },
 };
 
 export default function meds(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@MEDS/INDEX_MEDS_REQUEST':
+      case Types.INDEX_MEDS_REQUEST:
+        draft.status.loading = true;
         break;
 
-      case '@MEDS/INDEX_MEDS_SUCESS':
+      case Types.INDEX_MEDS_SUCCESS:
+        draft.status.loading = false;
         draft.data = action.payload.data;
+        draft.page = state.page + 1;
+        draft.data = [...state.data, ...action.payload.data];
         break;
 
-      case '@MEDS/SET_SELECT_MED':
+      case Types.STORE_MEDS_REQUEST:
+        draft.status.loading = true;
+        break;
+
+      case Types.STORE_MEDS_SUCCESS:
+        draft.status.loading = false;
+        draft.status.registered = true;
+        break;
+
+      case Types.RESET_REGISTERED:
+        draft.status.registered = false;
+        break;
+
+      case Types.RESET_DATA:
+        draft.data = [];
+        break;
+
+      case Types.SET_SELECT_MED:
         draft.selected.name = action.payload.name;
         draft.selected.quantity = action.payload.quantity;
         draft.selected.needSchedule = action.payload.needSchedule;
         break;
 
-      case '@MEDS/PROCEDURE_ERROR':
+      case Types.PROCEDURE_ERROR:
         draft.error.status = true;
         draft.error.message = action.payload.message;
+        draft.error.path = action.payload.path;
+        draft.error.reasons = action.payload.reasons;
         break;
 
       default:

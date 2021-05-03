@@ -8,6 +8,7 @@ export function signInRequest({ email, password }) {
 }
 
 export function signInSuccess({
+  id,
   email,
   name,
   location,
@@ -17,7 +18,7 @@ export function signInSuccess({
 }) {
   return {
     type: Types.SIGN_IN_SUCCESS,
-    payload: { email, name, location, address, neighborhood, token },
+    payload: { id, email, name, location, address, neighborhood, token },
   };
 }
 

@@ -14,6 +14,7 @@ import {
   userProcedureFail,
   resetUser,
 } from './actions';
+import { singOut } from '../auth/actions';
 
 function* userExist({ payload }) {
   try {
@@ -144,6 +145,14 @@ function* saveLocation() {
   yield put(searchAddressRequest());
 }
 
+function* procedureError() {
+  try {
+    const reasons = yield select(state => state?.meds?.error?.reasons);
+
+    if (reasons?.includes('The token has been expired')) yield put(singOut());
+  } catch (error) {}
+}
+
 export default all([
   takeLatest(Types.USER_EXIST_REQUEST, userExist),
   takeLatest(Types.STORE_USER_REQUEST, storeUser),
@@ -151,4 +160,5 @@ export default all([
   takeLatest(Types.SEARCH_ADDRESS_REQUEST, searchAddress),
   takeLatest(Types.SEARCH_LAT_LONG_REQUEST, searchLatLong),
   takeLatest(Types.SAVE_LOCATION, saveLocation),
+  takeLatest(Types.PROCEDURE_FAIL, procedureError),
 ]);

@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectMed } from '~/store/modules/meds/actions';
+import {
+  indexMedsRequest,
+  setSelectMed,
+  resetData,
+} from '~/store/modules/meds/actions';
 
 import {
   Container,
@@ -14,6 +18,9 @@ import {
   LeftSide,
   Labels,
   List,
+  Wrapper,
+  Illustration,
+  Message,
 } from './styles';
 
 import NewMedicine from './components/NewMedicine';
@@ -22,14 +29,20 @@ import EditMedicine from './components/EditMedicine';
 import plus from '~/assets/images/plus.svg';
 import pills from '~/assets/images/pills.png';
 import vacine from '~/assets/images/vacine-icon.png';
+import empty from '~/assets/images/medicine-empty.svg';
 
 function Meds() {
   const [addNewMedicine, setAddNewMedicine] = useState(false);
   const [editMed, setEditMed] = useState(false);
 
-  const meds = useSelector(state => state.meds.data);
+  const meds = useSelector(state => state?.meds?.data);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetData());
+    dispatch(indexMedsRequest());
+  }, []);
 
   function renderMeds(item, index) {
     const isVacine = item.name.includes('Vacina');
@@ -68,7 +81,13 @@ function Meds() {
             <Label>Novo medicamento</Label>
           </AddButton>
         </Header>
-        <List>{meds.map(renderMeds)}</List>
+        {meds?.length > 0 && <List>{meds.map(renderMeds)}</List>}
+        {meds?.length <= 0 && (
+          <Wrapper>
+            <Illustration src={empty} />
+            <Message>Não há remédios cadastrados</Message>
+          </Wrapper>
+        )}
       </Container>
       {addNewMedicine && <NewMedicine setAddNewMedicine={setAddNewMedicine} />}
       {editMed && <EditMedicine setEditMed={setEditMed} />}

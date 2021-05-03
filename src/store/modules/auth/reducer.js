@@ -33,6 +33,7 @@ export default function auth(state = INITIAL_STATE, action) {
       case Types.SIGN_IN_SUCCESS:
         draft.status.loading = false;
         draft.status.authentificated = true;
+        draft.user.id = action.payload.id;
         draft.user.email = action.payload.email;
         draft.user.name = action.payload.name;
         draft.user.location = action.payload.location;

@@ -122,16 +122,24 @@ function Settings() {
 
   function onSubmit(event) {
     event.preventDefault();
+
     dispatch(
       updateUserRequest({
         name,
         email,
         password,
         newPassword,
-        location: locationRedux !== userLocation ? locationRedux : userLocation,
-        address: userAddress !== addressRedux ? addressRedux : userAddress,
+        location:
+          locationRedux !== userLocation && locationRedux?.length > 0
+            ? locationRedux
+            : userLocation,
+        address:
+          userAddress !== addressRedux && addressRedux?.length > 0
+            ? addressRedux
+            : userAddress,
         neighborhood:
-          neighborhoodRedux !== userNeighborhood
+          neighborhoodRedux !== userNeighborhood &&
+          neighborhoodRedux?.length > 0
             ? neighborhoodRedux
             : userNeighborhood,
       })

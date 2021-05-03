@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  storeMedsRequest,
+  resetRegistered,
+} from '~/store/modules/meds/actions';
+
 import {
   ButtonContainer,
   Description,
@@ -21,9 +27,22 @@ import Input from '~/components/Input';
 import CheckBox from '~/components/CheckBox';
 import Button from '~/components/Button';
 
+import mask from '~/services/mask';
+
 function NewMedicine({ setAddNewMedicine }) {
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(undefined);
   const [scheduling, setScheduling] = useState(false);
-  const success = false;
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [startHour, setStartHour] = useState('');
+  const [endHour, setEndHour] = useState('');
+  const [intervalTime, setIntervalTime] = useState('');
+  const [error, setError] = useState(false);
+  const [incomplete, setIncomplete] = useState(false);
+  const success = useSelector(state => state?.meds?.status?.registered);
+
+  const dispatch = useDispatch();
 
   const animationOptions = {
     loop: false,
@@ -37,14 +56,130 @@ function NewMedicine({ setAddNewMedicine }) {
   function onClickOverModalContainer(event) {
     event.preventDefault();
     setAddNewMedicine(false);
+    if (success) dispatch(resetRegistered());
   }
 
   function preventPropagation(event) {
     event.stopPropagation();
   }
 
-  function onCheckNeddScheduling() {
+  function onCheckNeedScheduling() {
     setScheduling(!scheduling);
+  }
+
+  function onChangeName(event) {
+    setName(event.target.value);
+  }
+
+  function onChangeQuantity(event) {
+    const value = parseInt(event.target.value);
+
+    if (Number.isInteger(value)) setQuantity(value);
+
+    if (event?.target?.value === '') setQuantity(undefined);
+  }
+
+  function onChangeStartDate(event) {
+    const value = event?.target?.value;
+    const raw = value?.replace(/\D/g, '');
+
+    if (value.length < startDate?.length) setStartDate(value);
+    else setStartDate(mask(raw, '99/99/9999'));
+  }
+
+  function onChangeEndDate(event) {
+    const value = event?.target?.value;
+    const raw = value?.replace(/\D/g, '');
+
+    if (value.length < startDate?.length) setEndDate(value);
+    else setEndDate(mask(raw, '99/99/9999'));
+  }
+
+  function onChangeStartHour(event) {
+    const value = event?.target?.value;
+    const raw = value?.replace(/\D/g, '');
+
+    if (value.length < startDate?.length) setStartHour(value);
+    else setStartHour(mask(raw, '99:99'));
+  }
+
+  function onChangeEndHour(event) {
+    const value = event?.target?.value;
+    const raw = value?.replace(/\D/g, '');
+
+    if (value.length < startDate?.length) setEndHour(value);
+    else setEndHour(mask(raw, '99:99'));
+  }
+
+  function onChangeIntervalTime(event) {
+    const value = event?.target?.value;
+    const raw = value?.replace(/\D/g, '');
+
+    if (value.length < startDate?.length) setIntervalTime(value);
+    else setIntervalTime(mask(raw, '99:99'));
+  }
+
+  function isEmpty(string) {
+    return string?.length <= 0;
+  }
+
+  function isIncompleteDate(string) {
+    return string?.length < 10;
+  }
+
+  function isIncompleteHour(string) {
+    return string?.length < 5;
+  }
+
+  function onSubmit(event) {
+    event.preventDefault();
+
+    if (scheduling) schedulingSubmit();
+    else submit();
+  }
+
+  function schedulingSubmit() {
+    const payload = {
+      name,
+      quantity,
+      needSchedule: true,
+      startDate,
+      endDate,
+      startHour,
+      endHour,
+      intervalTime,
+    };
+
+    if (
+      isEmpty(name) ||
+      isEmpty(quantity) ||
+      isEmpty(startDate) ||
+      isEmpty(endDate) ||
+      isEmpty(startHour) ||
+      isEmpty(endHour) ||
+      isEmpty(intervalTime)
+    )
+      setError(true);
+    else if (
+      isIncompleteDate(startDate) ||
+      isIncompleteDate(endDate) ||
+      isIncompleteHour(startHour) ||
+      isIncompleteHour(endHour) ||
+      isIncompleteHour(intervalTime)
+    )
+      setIncomplete(true);
+    else dispatch(storeMedsRequest(payload));
+  }
+
+  function submit() {
+    const payload = {
+      name,
+      quantity,
+      needSchedule: false,
+    };
+
+    if (isEmpty(name) || isEmpty(quantity)) setError(true);
+    else dispatch(storeMedsRequest(payload));
   }
 
   return (
@@ -56,20 +191,28 @@ function NewMedicine({ setAddNewMedicine }) {
             Informe o nome e a quantidade do medicamento. Se ele precisar de
             agendamento, marque a caixa.
           </Description>
-          <Form>
+          <Form onSubmit={onSubmit}>
             <Inputs>
-              <Input width="220px" background="#eee" placeholder="Nome" />
+              <Input
+                width="220px"
+                background="#eee"
+                placeholder="Nome"
+                value={name}
+                onChange={onChangeName}
+              />
               <Input
                 width="110px"
                 background="#eee"
                 placeholder="Quantidade"
                 textAlign="center"
+                value={quantity}
+                onChange={onChangeQuantity}
               />
             </Inputs>
             <CheckBox
               label="Precisa de agendamento"
               checked={scheduling}
-              onChange={onCheckNeddScheduling}
+              onChange={onCheckNeedScheduling}
             />
             {scheduling && (
               <SchedulingOptions>
@@ -81,6 +224,8 @@ function NewMedicine({ setAddNewMedicine }) {
                     background="#eee"
                     placeholder="00/00/0000"
                     textAlign="center"
+                    value={startDate}
+                    onChange={onChangeStartDate}
                   />
                 </Option>
                 <Option>
@@ -90,6 +235,8 @@ function NewMedicine({ setAddNewMedicine }) {
                     background="#eee"
                     placeholder="00/00/0000"
                     textAlign="center"
+                    value={endDate}
+                    onChange={onChangeEndDate}
                   />
                 </Option>
                 <Option>
@@ -99,6 +246,8 @@ function NewMedicine({ setAddNewMedicine }) {
                     background="#eee"
                     placeholder="00:00"
                     textAlign="center"
+                    value={startHour}
+                    onChange={onChangeStartHour}
                   />
                 </Option>
                 <Option>
@@ -108,6 +257,8 @@ function NewMedicine({ setAddNewMedicine }) {
                     background="#eee"
                     placeholder="00:00"
                     textAlign="center"
+                    value={endHour}
+                    onChange={onChangeEndHour}
                   />
                 </Option>
                 <Option>
@@ -117,6 +268,8 @@ function NewMedicine({ setAddNewMedicine }) {
                     background="#eee"
                     placeholder="00:00"
                     textAlign="center"
+                    value={intervalTime}
+                    onChange={onChangeIntervalTime}
                   />
                 </Option>
               </SchedulingOptions>

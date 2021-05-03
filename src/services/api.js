@@ -12,6 +12,8 @@ const routes = {
   searchLatLong: '/map/search/latLong',
   userExist: '/pharms/user/exist',
   vacinations: '/vacinations',
+  meds: '/medicines',
+  schedule: '/vacine/schedule',
 };
 
 export { routes };

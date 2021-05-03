@@ -13,6 +13,7 @@ function* signIn({ payload }) {
     });
 
     const token = response.data?.token;
+    const id = response.data?.id;
     const email = response.data?.email;
     const name = response.data?.name;
     const location = response.data?.location;
@@ -22,7 +23,7 @@ function* signIn({ payload }) {
     if (token) api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(
-      signInSuccess({ email, name, location, address, neighborhood, token })
+      signInSuccess({ id, email, name, location, address, neighborhood, token })
     );
     history.push('/statistics');
   } catch (error) {
