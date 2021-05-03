@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'mais-med',
       storage,
-      whitelist: ['menu', 'auth', 'user'],
+      whitelist: ['auth', 'user'],
     },
     reducers
   );
