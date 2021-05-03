@@ -11,6 +11,10 @@ export default function menu(state = INITIAL_STATE, action) {
         draft.page = action.payload.page;
         break;
 
+      case '@MENU/RESET_PAGE':
+        draft.page = INITIAL_STATE.page;
+        break;
+
       default:
         break;
     }

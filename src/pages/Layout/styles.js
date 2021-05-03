@@ -25,6 +25,7 @@ export const Page = styled.main`
   width: 100%;
   height: 100%;
   background: ${colors.grey};
+  overflow: hidden;
 `;
 
 export const ExitButton = styled.button`

@@ -1,6 +1,7 @@
 import { all, takeLatest, call, race, put, select } from 'redux-saga/effects';
 import Types from './types';
 import { signInSuccess, authProcedureFail } from './actions';
+import { resetPage } from '../menu/actions';
 import api, { routes } from '~/services/api';
 import { timer, errorHandler } from '../utils';
 import history from '~/services/history';
@@ -31,8 +32,9 @@ function* signIn({ payload }) {
   }
 }
 
-function signOut() {
+function* signOut() {
   api.defaults.headers.Authorization = null;
+  yield put(resetPage());
 }
 
 function* setToken() {

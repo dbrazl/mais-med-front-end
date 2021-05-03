@@ -38,6 +38,8 @@ export const List = styled.ul`
   padding: 0 20px;
   display: flex;
   flex-direction: column;
+  height: calc(100% - 70px);
+  overflow-y: scroll;
 `;
 
 export const Item = styled.li`
@@ -45,6 +47,7 @@ export const Item = styled.li`
   list-style: none;
   width: calc(100% - 40px);
   height: 60px;
+  min-height: 60px;
   background: white;
   display: flex;
   align-items: center;

@@ -4,3 +4,9 @@ export function setPage(page) {
     payload: { page },
   };
 }
+
+export function resetPage() {
+  return {
+    type: '@MENU/RESET_PAGE',
+  };
+}
