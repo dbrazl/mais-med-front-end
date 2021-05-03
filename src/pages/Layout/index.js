@@ -51,14 +51,14 @@ function Layout({ children }) {
       <Menu>
         <InputName placeholder="Posto de atendimento" />
         <MenuList>
-          <MenuItem
+          {/* <MenuItem
             to={page.STATISTICS}
             onClick={() => onClickMenuItem(page.STATISTICS)}
           >
             <Icon src={graph} />
             <Label>Estatísticas</Label>
             {pageSeted === page.STATISTICS && <Indicator />}
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem to={page.MEDS} onClick={() => onClickMenuItem(page.MEDS)}>
             <Icon src={meds} />
             <Label>Medicamentos</Label>

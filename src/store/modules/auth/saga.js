@@ -26,7 +26,7 @@ function* signIn({ payload }) {
     yield put(
       signInSuccess({ id, email, name, location, address, neighborhood, token })
     );
-    history.push('/statistics');
+    history.push('/meds');
   } catch (error) {
     yield errorHandler(error, authProcedureFail);
   }

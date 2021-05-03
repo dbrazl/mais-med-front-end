@@ -16,7 +16,7 @@ export default function RouteWrapper({
   const authentificated = store.getState()?.auth?.status?.authentificated;
 
   if (!authentificated && isPrivate) history.push('/');
-  if (authentificated && !isPrivate) history.push('/statistics');
+  if (authentificated && !isPrivate) history.push('/meds');
 
   if (isDashboard)
     return (

@@ -51,7 +51,7 @@ function* storeUser() {
     yield put(storeUserSuccess());
     yield put(resetUser());
 
-    history.push('/statistics');
+    history.push('/meds');
   } catch (error) {
     yield errorHandler(error, userProcedureFail);
   }
