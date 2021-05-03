@@ -4,13 +4,22 @@ import Types from './types';
 const INITIAL_STATE = {
   data: [],
   selected: {
+    id: '',
     name: '',
     quantity: 0,
-    needSchedule: false,
+    needToSchedule: false,
+    scheduleInfo: {
+      startDate: '',
+      endDate: '',
+      startHour: '',
+      endHour: '',
+      intervalTime: '',
+    },
   },
   status: {
     loading: false,
     registered: false,
+    updated: false,
   },
   error: {
     status: false,
@@ -43,8 +52,21 @@ export default function meds(state = INITIAL_STATE, action) {
         draft.status.registered = true;
         break;
 
+      case Types.UPDATE_MED_REQUEST:
+        draft.status.loading = true;
+        break;
+
+      case Types.UPDATE_MED_SUCCESS:
+        draft.status.loading = false;
+        draft.status.updated = true;
+        break;
+
       case Types.RESET_REGISTERED:
         draft.status.registered = false;
+        break;
+
+      case Types.RESET_UPDATED:
+        draft.status.updated = false;
         break;
 
       case Types.RESET_DATA:
@@ -52,9 +74,23 @@ export default function meds(state = INITIAL_STATE, action) {
         break;
 
       case Types.SET_SELECT_MED:
+        draft.selected.id = action.payload.id;
         draft.selected.name = action.payload.name;
         draft.selected.quantity = action.payload.quantity;
-        draft.selected.needSchedule = action.payload.needSchedule;
+        draft.selected.needToSchedule = action.payload.needToSchedule;
+        break;
+
+      case Types.RESET_SELECT_MED:
+        draft.selected = INITIAL_STATE.selected;
+        break;
+
+      case Types.INDEX_SCHEDULE_INFO:
+        draft.selected.scheduleInfo.startDate = action.payload.data.startDate;
+        draft.selected.scheduleInfo.endDate = action.payload.data.endDate;
+        draft.selected.scheduleInfo.startHour = action.payload.data.startHour;
+        draft.selected.scheduleInfo.endHour = action.payload.data.endHour;
+        draft.selected.scheduleInfo.intervalTime =
+          action.payload.data.intervalTime;
         break;
 
       case Types.PROCEDURE_ERROR:

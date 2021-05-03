@@ -54,7 +54,7 @@ function Meds() {
           <Icon src={isVacine ? vacine : pills} />
           <Labels>
             <Label>{item.name}</Label>
-            {item.needSchedule && <Alert>Precisa ser agendada</Alert>}
+            {item.needToSchedule && <Alert>Precisa ser agendada</Alert>}
           </Labels>
         </LeftSide>
         <Label>{quantity}</Label>

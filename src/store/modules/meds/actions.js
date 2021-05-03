@@ -45,6 +45,37 @@ export function storeMedsSuccess(data) {
   };
 }
 
+export function updateMedRequest({
+  name,
+  quantity,
+  needSchedule,
+  startDate,
+  endDate,
+  startHour,
+  endHour,
+  intervalTime,
+}) {
+  return {
+    type: Types.UPDATE_MED_REQUEST,
+    payload: {
+      name,
+      quantity,
+      needSchedule,
+      startDate,
+      endDate,
+      startHour,
+      endHour,
+      intervalTime,
+    },
+  };
+}
+
+export function updateMedSuccess() {
+  return {
+    type: Types.UPDATE_MED_SUCCESS,
+  };
+}
+
 export function setSelectMed(data) {
   return {
     type: Types.SET_SELECT_MED,
@@ -58,9 +89,28 @@ export function resetRegistered() {
   };
 }
 
+export function resetUpdated() {
+  return {
+    type: Types.RESET_UPDATED,
+  };
+}
+
 export function resetData() {
   return {
     type: Types.RESET_DATA,
+  };
+}
+
+export function resetSelected() {
+  return {
+    type: Types.RESET_SELECT_MED,
+  };
+}
+
+export function indexScheduleInfoSuccess(data) {
+  return {
+    type: Types.INDEX_SCHEDULE_INFO,
+    payload: { data },
   };
 }
 
