@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  page: 'statistics',
+  page: 'meds',
 };
 
 export default function menu(state = INITIAL_STATE, action) {
