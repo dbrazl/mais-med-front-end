@@ -193,7 +193,7 @@ export default all([
   takeLatest(Types.SET_SELECT_MED, indexScheduleInfo),
   takeLatest(Types.UPDATE_MED_REQUEST, updateMed),
   takeLatest(Types.UPDATE_MED_SUCCESS, getMedsList),
-  // takeLatest(Types.DELETE_MED_REQUEST, deleteMed),
+  takeLatest(Types.DELETE_MED_REQUEST, deleteMed),
   takeLatest(Types.DELETE_MED_SUCCESS, getMedsList),
   takeLatest(Types.PROCEDURE_ERROR, procedureError),
 ]);
