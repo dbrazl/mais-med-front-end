@@ -36,13 +36,13 @@ function* storeMed({ payload }) {
       needSchedule,
     };
 
-    const { respponse } = yield race({
+    const { response } = yield race({
       response: call(api.post, routes.meds, bodyMedicine),
       timeout: call(timer),
     });
 
     if (needSchedule) {
-      const medicineId = respponse.data?.id;
+      const medicineId = response.data?.id;
 
       const bodySchedule = {
         startDate: payload?.startDate,

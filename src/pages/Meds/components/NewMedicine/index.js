@@ -91,7 +91,7 @@ function NewMedicine({ setAddNewMedicine }) {
     const value = event?.target?.value;
     const raw = value?.replace(/\D/g, '');
 
-    if (value.length < startDate?.length) setEndDate(value);
+    if (value.length < endDate?.length) setEndDate(value);
     else setEndDate(mask(raw, '99/99/9999'));
   }
 
@@ -99,7 +99,7 @@ function NewMedicine({ setAddNewMedicine }) {
     const value = event?.target?.value;
     const raw = value?.replace(/\D/g, '');
 
-    if (value.length < startDate?.length) setStartHour(value);
+    if (value.length < startHour?.length) setStartHour(value);
     else setStartHour(mask(raw, '99:99'));
   }
 
@@ -107,7 +107,7 @@ function NewMedicine({ setAddNewMedicine }) {
     const value = event?.target?.value;
     const raw = value?.replace(/\D/g, '');
 
-    if (value.length < startDate?.length) setEndHour(value);
+    if (value.length < endHour?.length) setEndHour(value);
     else setEndHour(mask(raw, '99:99'));
   }
 
@@ -115,7 +115,7 @@ function NewMedicine({ setAddNewMedicine }) {
     const value = event?.target?.value;
     const raw = value?.replace(/\D/g, '');
 
-    if (value.length < startDate?.length) setIntervalTime(value);
+    if (value.length < intervalTime?.length) setIntervalTime(value);
     else setIntervalTime(mask(raw, '99:99'));
   }
 
